@@ -49,6 +49,7 @@ function initializeGame() {
   generateFruit();
 
   increaseSnakeLength("100px", "100px");
+  increaseSnakeLength();
 
   let timer;
   if(window.innerWidth > 768){
@@ -155,13 +156,32 @@ function isCollide(obj1, obj2) {
 function setTextures() {
   snake[0].style.backgroundImage = `url('../images/head_${currDir}.png')`;
 
-  for(let i = 1; i < snake.length; i++) {
+  for(let i = 1; i < snake.length - 1; i++) {
     if(snake[i - 1].style.top == snake[i].style.top){
       snake[i].style.backgroundImage = `url('../images/body_horizontal.png')`;
     } else if (snake[i - 1].style.left == snake[i].style.left){
       snake[i].style.backgroundImage = `url('../images/body_vertical.png')`;
     }
   }
+
+  let tail = snake[snake.length - 1];
+  let beforeTail = snake[snake.length - 2];
+  let tailTop = tail.style.top;
+  let tailLeft = tail.style.left;
+  let beforeTailLeft = beforeTail.style.left;
+  let beforeTailTop = beforeTail.style.top;
+  let tailTexture;
+  if(beforeTailTop > tailTop){
+    tailTexture = `url('../images/tail_up.png')`;
+  } else if(beforeTailTop < tailTop){
+    tailTexture = `url('../images/tail_down.png')`;
+  } else if(beforeTailLeft > tailLeft){
+    tailTexture = `url('../images/tail_left.png')`;
+  } else {
+    tailTexture = `url('../images/tail_right.png')`;
+  }
+
+  tail.style.backgroundImage = tailTexture;
 }
 
 function movementEvents() {
