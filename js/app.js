@@ -2,12 +2,12 @@ const fruit = document.querySelector(".fruit");
 const game = document.querySelector(".game");
 const gameContainer = document.querySelector(".game-container");
 const menu = document.querySelector(".menu-cont");
-const currScoreCont = document.querySelector('.curr-score-num');
-const finalScore = document.querySelector('.final-score-num');
-const maxScore = document.querySelector('.max-score-num');
-const startBtn = document.querySelector('.start-btn');
-const gameOver = document.querySelector('.game-over');
-const controlBtns = document.querySelectorAll('.control-button');
+const currScoreCont = document.querySelector(".curr-score-num");
+const finalScore = document.querySelector(".final-score-num");
+const maxScore = document.querySelector(".max-score-num");
+const startBtn = document.querySelector(".start-btn");
+const gameOver = document.querySelector(".game-over");
+const controlBtns = document.querySelectorAll(".control-button");
 let snake = [];
 let currDir;
 let snakeMovementInterval;
@@ -15,28 +15,26 @@ let currScore;
 
 startMenu();
 
-startBtn.addEventListener('click', () => {
+startBtn.addEventListener("click", () => {
   initializeGame();
-})
+});
 
-function startMenu(){
+function startMenu() {
   gameContainer.remove();
 
-  maxScore.textContent = localStorage.getItem('max-score') || '--';
+  maxScore.textContent = localStorage.getItem("max-score") || "--";
 
-  if(currScore != undefined){
+  if (currScore != undefined) {
     document.body.append(menu);
-    gameOver.style.display = 'block';
-    finalScore.closest('.final-score').style.display = 'block';
+    gameOver.style.display = "block";
+    finalScore.closest(".final-score").style.display = "block";
     finalScore.textContent = currScore;
   }
 }
 
 function generateFruit() {
-  fruit.style.top =
-    Math.floor(Math.random() * (game.scrollHeight - 20)) + "px";
-  fruit.style.left =
-    Math.floor(Math.random() * (game.scrollWidth - 20)) + "px";
+  fruit.style.top = Math.floor(Math.random() * (game.scrollHeight - 20)) + "px";
+  fruit.style.left = Math.floor(Math.random() * (game.scrollWidth - 20)) + "px";
 }
 
 function initializeGame() {
@@ -45,19 +43,27 @@ function initializeGame() {
 
   currScore = 0;
   currDir = "right";
-  snake.forEach((part) => part.remove())
+  snake.forEach((part) => part.remove());
   snake = [];
 
   generateFruit();
-  
+
   increaseSnakeLength("100px", "100px");
+
+  let timer;
+  if(window.innerWidth > 768){
+    timer = 100;
+  } else {
+    timer = 150;
+  }
 
   snakeMovementInterval = setInterval(() => {
     movingSnakeBody();
     movingSnakeHead();
     checkCollision();
+    setTextures();
     currScoreCont.textContent = currScore;
-  }, 200);
+  }, timer);
 
   movementEvents();
 }
@@ -69,6 +75,10 @@ function increaseSnakeLength(x, y) {
 
   x = x ? x : snake[snake.length - 2]?.style.left;
   y = y ? y : snake[snake.length - 2]?.style.top;
+
+  if (snake.length === 1) {
+    newPart.style.backgroundColor = "transparent";
+  }
 
   newPart.style.top = y;
   newPart.style.left = x;
@@ -142,10 +152,22 @@ function isCollide(obj1, obj2) {
   return false;
 }
 
-function movementEvents(){
+function setTextures() {
+  snake[0].style.backgroundImage = `url('../images/head_${currDir}.png')`;
+
+  for(let i = 1; i < snake.length; i++) {
+    if(snake[i - 1].style.top == snake[i].style.top){
+      snake[i].style.backgroundImage = `url('../images/body_horizontal.png')`;
+    } else if (snake[i - 1].style.left == snake[i].style.left){
+      snake[i].style.backgroundImage = `url('../images/body_vertical.png')`;
+    }
+  }
+}
+
+function movementEvents() {
   window.addEventListener("keydown", (e) => {
     const key = e.key;
-  
+
     if (key === "a" || key === "ArrowLeft") currDir = "left";
     else if (key === "s" || key === "ArrowDown") currDir = "down";
     else if (key === "d" || key === "ArrowRight") currDir = "right";
@@ -155,12 +177,15 @@ function movementEvents(){
   controlBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       currDir = btn.dataset.id;
-    })
-  })
+    });
+  });
 }
 
-function endGame(){
+function endGame() {
   clearInterval(snakeMovementInterval);
-  localStorage.setItem('max-score', Math.max(localStorage.getItem('max-score') || 0, currScore));
+  localStorage.setItem(
+    "max-score",
+    Math.max(localStorage.getItem("max-score") || 0, currScore)
+  );
   startMenu();
 }

@@ -33,11 +33,12 @@ body{
 }
 
 .snake-part{
-  width: 20px;
-  height: 20px;
-  background-color: #5b7af8;
+  width: 25px;
+  height: 25px;
+  background-image: url('../images/body_vertical.png');
   position: absolute;
-  transition: .4s;
+  transition: .2s;
+  background-size: cover;
 }
 
 .fruit{
@@ -149,5 +150,9 @@ body{
 
   .score{
     font-size: 16px;
+  }
+
+  .snake-part{
+    transition: .3s;
   }
 }
