@@ -82,7 +82,6 @@ body{
   border: 6px solid green;
   padding: 10px;
   border-radius: 15px;
-  
 }
 
 .game-title{
@@ -146,5 +145,9 @@ body{
 
   .mobile-controls{
     display: flex;
+  }
+
+  .score{
+    font-size: 16px;
   }
 }
