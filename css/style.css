@@ -140,7 +140,8 @@ body{
 
 @media (max-width: 768px){
   .game{
-    height: calc(100vh - 200px);
+    height: calc(100vh - 250px);
+    padding: 0;
   }
 
   .mobile-controls{
