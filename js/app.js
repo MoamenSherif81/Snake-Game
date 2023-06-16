@@ -13,6 +13,7 @@ let currDir;
 let snakeMovementInterval;
 let currScore;
 
+gameContainer.remove();
 startMenu();
 
 startBtn.addEventListener("click", () => {
@@ -21,6 +22,8 @@ startBtn.addEventListener("click", () => {
 
 function startMenu() {
   gameContainer.remove();
+  document.body.append(menu);  
+
 
   maxScore.textContent = localStorage.getItem("max-score") || "--";
 
@@ -29,6 +32,12 @@ function startMenu() {
     gameOver.style.display = "block";
     finalScore.closest(".final-score").style.display = "block";
     finalScore.textContent = currScore;
+  }
+
+  let imgs = ['body_horizontal.png', 'body_vertical.png', 'head_down.png', 'head_left.png', 'head_right.png', 'head_up.png', 'tail_down.png', 'tail_left.png', 'tail_right.png', 'tail_up.png']
+  for(let i = 0; i < 10; i++){
+    let img=new Image();
+    img.src= '../images/' + imgs[i];
   }
 }
 
