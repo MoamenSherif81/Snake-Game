@@ -1,10 +1,11 @@
 const fruit = document.querySelector(".fruit");
 const gameContainer = document.querySelector(".container");
-const menu = document.querySelector(".menu");
+const menu = document.querySelector(".menu-cont");
 const currScoreCont = document.querySelector('.curr-score-num');
 const finalScore = document.querySelector('.final-score-num');
 const maxScore = document.querySelector('.max-score-num');
 const startBtn = document.querySelector('.start-btn');
+const gameOver = document.querySelector('.game-over');
 let snake = [];
 let currDir;
 let snakeMovementInterval;
@@ -23,6 +24,7 @@ function startMenu(){
 
   if(currScore != undefined){
     document.body.append(menu);
+    gameOver.style.display = 'block';
     finalScore.closest('.final-score').style.display = 'block';
     finalScore.textContent = currScore;
   }
@@ -152,5 +154,6 @@ function movementEvents(){
 function endGame(){
   clearInterval(snakeMovementInterval);
   gameContainer.remove();
+  localStorage.setItem('max-score', Math.max(localStorage.getItem('max-score') || 0, currScore));
   startMenu();
 }

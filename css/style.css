@@ -5,6 +5,9 @@ body{
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  background-image: url('../images/back3.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 *{
@@ -63,15 +66,18 @@ body{
   width: 30px;
 }
 
+.menu-cont{
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
 
 .menu{
   background-color: rgb(0, 194, 0);
   border: 6px solid green;
   padding: 10px;
   border-radius: 15px;
-  width: 100%;
-  max-width: 500px;
-  text-align: center;
+  
 }
 
 .game-title{
@@ -88,8 +94,13 @@ body{
   margin-bottom: 20px;
 }
 
-.final-score{
+.final-score, .game-over{
   display: none;
+}
+
+.game-over{
+  font-size: 60px;
+  color: white;
 }
 
 .start-btn{
