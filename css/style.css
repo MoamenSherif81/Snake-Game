@@ -15,8 +15,11 @@ body{
   font-family:'Courier New', Courier, monospace;
 }
 
-.container{
-  background-color: rgb(0, 194, 0);
+.game-container{
+  width: 100%;
+}
+
+.game{
   border: 6px solid green;
   padding: 10px;
   width: 100%;
@@ -25,6 +28,8 @@ body{
   max-height: 100vh;
   border-radius: 15px;
   position: relative;
+  background-image: url('../images/gameBackground.jpg');
+  margin: auto;
 }
 
 .snake-part{
@@ -103,7 +108,7 @@ body{
   color: white;
 }
 
-.start-btn{
+.start-btn, button{
   background-color: transparent;
   color: rgb(0, 62, 0);
   border: 2px solid green;
@@ -112,4 +117,33 @@ body{
   font-size: 20px;
   cursor: pointer;
   font-weight: bold;
+}
+
+.mobile-controls{
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  display: none;
+  height: 200px;
+}
+
+.mobile-controls button{
+  height: 50px;
+  background-color: rgb(0, 194, 0);
+}
+
+.middle-controls{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (max-width: 768px){
+  .game{
+    height: calc(100vh - 200px);
+  }
+
+  .mobile-controls{
+    display: flex;
+  }
 }

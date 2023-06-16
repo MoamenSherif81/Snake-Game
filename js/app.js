@@ -1,11 +1,13 @@
 const fruit = document.querySelector(".fruit");
-const gameContainer = document.querySelector(".container");
+const game = document.querySelector(".game");
+const gameContainer = document.querySelector(".game-container");
 const menu = document.querySelector(".menu-cont");
 const currScoreCont = document.querySelector('.curr-score-num');
 const finalScore = document.querySelector('.final-score-num');
 const maxScore = document.querySelector('.max-score-num');
 const startBtn = document.querySelector('.start-btn');
 const gameOver = document.querySelector('.game-over');
+const controlBtns = document.querySelectorAll('.control-button');
 let snake = [];
 let currDir;
 let snakeMovementInterval;
@@ -32,9 +34,9 @@ function startMenu(){
 
 function generateFruit() {
   fruit.style.top =
-    Math.floor(Math.random() * (gameContainer.scrollHeight - 20)) + "px";
+    Math.floor(Math.random() * (game.scrollHeight - 20)) + "px";
   fruit.style.left =
-    Math.floor(Math.random() * (gameContainer.scrollWidth - 20)) + "px";
+    Math.floor(Math.random() * (game.scrollWidth - 20)) + "px";
 }
 
 function initializeGame() {
@@ -71,7 +73,7 @@ function increaseSnakeLength(x, y) {
   newPart.style.top = y;
   newPart.style.left = x;
 
-  gameContainer.append(newPart);
+  game.append(newPart);
 }
 
 function movingSnakeHead() {
@@ -109,8 +111,8 @@ function checkCollision() {
   } else if (
     snakeHeadTop < 0 ||
     snakeHeadLeft < 0 ||
-    snakeHeadTop >= gameContainer.scrollHeight - 20 ||
-    snakeHeadLeft >= gameContainer.scrollWidth - 20
+    snakeHeadTop >= game.scrollHeight - 20 ||
+    snakeHeadLeft >= game.scrollWidth - 20
   ) {
     endGame();
   } else {
@@ -149,11 +151,16 @@ function movementEvents(){
     else if (key === "d" || key === "ArrowRight") currDir = "right";
     else if (key === "w" || key === "ArrowUp") currDir = "up";
   });
+
+  controlBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      currDir = btn.dataset.id;
+    })
+  })
 }
 
 function endGame(){
   clearInterval(snakeMovementInterval);
-  gameContainer.remove();
   localStorage.setItem('max-score', Math.max(localStorage.getItem('max-score') || 0, currScore));
   startMenu();
 }
